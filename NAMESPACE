@@ -1,0 +1,27 @@
+export(beta.model,
+      exp.2o.decay,
+      exp.decay.pl,
+      exp.decay,
+      f2djac,
+      gompertz.model,
+      hill5.model,
+      hill.model,
+      hill.quad.model,
+      hill.switchpoint.model,
+      improved.fitter,
+      nlogLik.cauchy,
+      optim.fit,
+      rout.fitter,
+      rout.outlier.test,
+      test.fit,     
+      weights.varIdent,
+      weights.varExp,
+      weights.huber, 
+      weights.varPower,
+      weights.varConstPower,
+      weights.tukey.bw)
+
+S3method(print, optim.fit)
+S3method(predict, optim.fit)
+S3method(residuals, optim.fit)
+S3method(print, rout.fit)

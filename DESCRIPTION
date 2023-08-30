@@ -1,0 +1,10 @@
+Package: OptimModel
+Type: Package
+Title: Perform nonlinear regression using "optim" as the optimization engine.
+Version: 1.3.0
+Author: Steven Novick <sjnovick@yahoo.com>
+Maintainer: Steven Novick <sjnovick@yahoo.com>
+Description: A wrapper for "optim" for nonlinear regression problems.  Performs ordinary least squares (OLS), iterative re-weighted least squares (IRWLS), maximum likelihood (MLE), and robust outlier detection via ROUT.
+License: GPL version 2 or newer
+Encoding: UTF-8
+LazyData: true
