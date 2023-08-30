@@ -1,3 +1,9 @@
+# Program:  f2djac.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Numeric gradient of any function of "theta"
+
 f2djac = function(Func, theta, ...)
 {
   ## Numeric gradient of Func with respect to theta

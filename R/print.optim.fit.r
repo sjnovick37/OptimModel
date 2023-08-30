@@ -1,11 +1,17 @@
+# Program:  print.optim.fit.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Print results from an optim.fit() object
+
 print.optim.fit = function(object, digits=4)
 {
-  cat("\n")    
+  cat("\n")
   cat( "Fit method = '", object$fit.method, "'\n", sep="" )
   cat( "Variance computation method = '", object$var.method, "'\n", sep="" )
   cat( "Weights =", attr(attr(object, "w.func"), "label"), "\n" )
   cat( "Convergence :", ifelse(object$converge==0, "Achieved", "Failed"), "\n" )
-  cat("\n")   
+  cat("\n")
   cat( 100*attr(object$beta, "conf.level"), "% Wald CI for parameters\n", sep="" )
   print.noquote( round(object$beta, digits) )
   cat( "sigma =", round(object$sigma, digits), "on", object$df, "degrees of freedom", "\n" )

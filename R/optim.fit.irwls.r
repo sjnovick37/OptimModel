@@ -1,3 +1,10 @@
+# Program:  optim.fit.irwls.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Internal functions for iterative reweighted least squares model fitting
+# This function is not visible to the user
+
 .optim.fit.irwls = function(ols.fit, f.model, gr.model, phi0, phi.fixed, x, y, w.func, optim.list)
 {
 
@@ -8,7 +15,7 @@
     phi.fixed=TRUE
     if ( is.null(phi0) )
     {
-#      sig = try(1.25*sqrt( IQR(sapply(split(y, x), var)) ))    
+#      sig = try(1.25*sqrt( IQR(sapply(split(y, x), var)) ))
 #      if ( class(sig)[1]=="try-error" )
 #        stop("Cannot proceed without an estimate of sigma.  Supply optim.fit() with 'phi0=c(sigma, B)'.")
 #      phi0 = c(sig, 4.685)
@@ -20,7 +27,7 @@
     phi.fixed=TRUE
     if ( is.null(phi0) )
       phi0 = 1.345  ## Huber tuning constant
-  }  
+  }
   if ( missing(phi0) && wt.type=="user.defined" )
     stop("Cannot proceed.  Supply optim.fit() with a value for 'phi0'.")
 
@@ -50,7 +57,7 @@
     if ( !phi.fixed )
     {
       phi.lag = phi
-      resid = as.vector(y - mu)       ## Used in trkfunc  (estimation of phi)      
+      resid = as.vector(y - mu)       ## Used in trkfunc  (estimation of phi)
       phi.fit = nlm(.trkfunc, phi.start, hessian = FALSE, typsize=rep(1, length(phi)),
                   fscale=optim.list$tol)
       if ( phi.fit$code > 3 )
@@ -63,7 +70,7 @@
             w.func(phi, as.vector(y-mu))
           else
             w.func(phi, mu)^(-2)
-    ## Scale the weights            
+    ## Scale the weights
 #    wts = 100*wts/( max(wts[is.finite(wts)]) - min(wts[is.finite(wts)]) )
 #    wts[is.infinite(wts)] = 10000
     fit = optim(theta0, fn=.f.ssq, gr=.gr.ssq, method=optim.list$method,

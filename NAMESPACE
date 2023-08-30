@@ -13,14 +13,15 @@ export(beta.model,
       optim.fit,
       rout.fitter,
       rout.outlier.test,
-      test.fit,     
+      test.fit,
       weights.varIdent,
       weights.varExp,
-      weights.huber, 
+      weights.huber,
       weights.varPower,
       weights.varConstPower,
       weights.tukey.bw)
 
+S3method(getData, optim.fit)
 S3method(print, optim.fit)
 S3method(predict, optim.fit)
 S3method(residuals, optim.fit)

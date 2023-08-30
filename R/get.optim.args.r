@@ -1,3 +1,10 @@
+# Program:  get.optim.args.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Internal functions to obtain extra arguments (the "...") for optim()
+# This function is not visible to the user
+
 .get.optim.args = function(object, tol)
 {
   method = object$method               ## Which method of function optim(...)

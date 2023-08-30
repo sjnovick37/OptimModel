@@ -1,3 +1,11 @@
+# Program:  get.fit.stats.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Internal functions to obtain variance estimates, r-squared, BIC, etc.
+# This function is not visible to the user
+
+
 .get.fit.stats = function(fit, x, y, conf.level)
 {
   ## Change 'par' to 'coef'
@@ -22,7 +30,7 @@
   if ( fit$fit.method != "mle" )
   {
     fit$sigma = sqrt( sum( wts*(y-f.model(theta.hat, x))^2 )/fit$df )
-  
+
     jacobian = attr(f.model, "gradient")
     if ( fit$var.method !="hessian" )
     {
@@ -42,10 +50,10 @@
             "robust"={ xTx.inv%*%t(X.mat*sqrt(wts)*fit$residuals)%*%(X.mat*sqrt(wts)*fit$residuals)%*%xTx.inv },
             "normal"={fit$sigma^2*xTx.inv },
             "hessian"={fit$sigma^2*solve(.5*fit$hessian)}), FALSE )
-  }            
+  }
 
   if ( !is.numeric(fit$varBeta) )
-  {  
+  {
     warning("Invalid variance-covariance matrix.")
     fit$varBeta = matrix(NA, length(coef(fit)), length(coef(fit)))
   }
@@ -58,7 +66,7 @@
   attr(beta, "conf.level") = conf.level
 
   fit$beta = beta
-  
+
   ## Compute r-squared
   ssto = sum( (y - mean(y))^2*wts )
   sse = fit$sigma^2*fit$df
@@ -75,7 +83,7 @@
     ## log-likelihood as if fitted via MLE
   log.l = sum( dnorm(y, mean=fitted(fit), sd=sig*sqrt(fit$df/length(y)), log=TRUE) )
   fit$bic = -2*log.l + log(length(y))*(nparm+1)   ## Number of parameters includes the standard deviation
-  
+
   return(fit)
 }
 

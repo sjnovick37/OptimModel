@@ -1,3 +1,9 @@
+# Program:  nlogLik.cauchy.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  negative log-likelihood for Cauchy model fit
+
 nlogLik.cauchy = function(theta, x, y, f.model, lbs)
 {
   ## Negative log likelihood for Cauchy distribution of y | x

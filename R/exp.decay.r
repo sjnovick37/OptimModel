@@ -1,3 +1,10 @@
+# Program:  exp.decay.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Exponential (first-order) decay Model, gradiant, and backsolve algorithms
+
+
 exp.decay = function(theta, x)
 {
   K = exp(theta[3])
@@ -8,10 +15,10 @@ exp.decay = function(theta, x)
 attr(exp.decay, "backsolve") = function(theta, y, log=FALSE)
 {
   out = -(1/exp(theta[3]))*log( (y-theta[1])/theta[2] )
-  
+
   if ( log )
     out = log(out)
-  
+
   return(out)
 }
 attr(exp.decay, "gradient") = function(theta, x)

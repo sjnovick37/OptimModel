@@ -1,20 +1,27 @@
+# Program:  optim.fit.mle.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Internal functions for maximum likelihood model fitting
+# This function is not visible to the user
+
 .optim.fit.mle = function(ols.fit, f.model, phi0, phi.fixed, x, y, w.func, optim.list)
 {
 
   ## Identify the weights function.  Give starting values to phi if not supplied by phi0.
   if ( class(w.func) != "function" )
     stop("MLE algorithm requires that 'wts' in optim.fit() be a function.")
-    
+
   wt.type = attr(w.func, "label")
   if ( missing(phi0) && wt.type=="user.defined" )
     stop("Cannot proceed.  Supply optim.fit() with a value for 'phi0'.")
-    
+
   if ( !is.null(phi0) )
     phi.start = phi0
   else
     phi.start = switch(attr(w.func, "label"), "weights.varExp"={c(phi=.1)},
                   "weights.varPower"={c(phi=.5)}, "weights.varConstPower"={c(c=0, phi=.5)})
-                  
+
   theta0 = ols.fit$par
   p.th = length(theta0)
 

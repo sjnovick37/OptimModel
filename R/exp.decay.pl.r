@@ -1,3 +1,10 @@
+# Program:  exp.decay.pl.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Exponential decay with initial plateau Model, gradiant, and backsolve algorithms
+
+
 exp.decay.pl = function(theta, x)
 {
   x0 = exp(theta[1])
@@ -11,10 +18,10 @@ attr(exp.decay.pl, "backsolve") = function(theta, y, log=FALSE)
   x0 = exp(theta[1])
   K = exp(theta[4])
   out = ifelse( y >= theta[2], x0, x0-(1/K)*log( (y-theta[3])/(theta[2]-theta[3]) ) )
-  
+
   if ( log )
     out = log(out)
-    
+
   return(out)
 }
 attr(exp.decay.pl, "gradient") = function(theta, x)
@@ -52,7 +59,7 @@ attr(exp.decay.pl, "start") = function(x, y)
   delta = min( abs(yMin) )*.0001
   logY = log( (y-yMin)/(yMax-yMin)+delta )
   slope.coef = as.vector(coef(lm( logY~I(x0-x)-1, subset=x>x0 )))
-  
+
   theta0["x0"] = log(x0)
   theta0["yMax"] = yMax+delta
   theta0["yMin"] = yMin-delta

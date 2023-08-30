@@ -1,6 +1,13 @@
+# Program:  rout.outlier.test.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Perform the Robust Outlier (ROUT) testing of Motulsky and Brown (2006)
+
 rout.outlier.test = function(fit, Q=0.01)
 {
   ## ROUT outlier test method
+  ## fit = "rout.fit" object
   ## Q = test size
 
   if ( class(fit)[1] != "rout.fit" )
@@ -13,7 +20,7 @@ rout.outlier.test = function(fit, Q=0.01)
   pval = 2*pt( -abs(fit$sresiduals), df=degFree )
   pval.adj = p.adjust( pval, method="BH" )  ## Adjust p-values for multiplicity via BH method (=fdr)
 
-  
+
   ## Determine outliers.  If p-value <= Q, point may be an outlier
   fit$outlier = pval <= Q
   fit$outlier.adj = pval.adj <= Q

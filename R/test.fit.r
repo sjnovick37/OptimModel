@@ -1,3 +1,9 @@
+# Program:  test.fit.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Tests if optim() has truly converged
+
 test.fit = function(obj)
 {
   ## 1. Test if optim() converged.  optim()$converge==0

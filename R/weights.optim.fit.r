@@ -1,3 +1,10 @@
+# Program:  weights.optim.fit.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Different weight functions for optim.fit()
+
+
 weights.varIdent = function(phi, mu){ rep(1, length(mu)) }
 weights.varExp = function(phi, mu){ exp(phi*mu) }
 weights.varPower = function(phi, mu){ abs(mu)^(phi) }
@@ -17,7 +24,7 @@ weights.huber = function(phi=1.345, resid)
   sig = mad(resid, center=0)
   r = abs(resid)/sig
   wts = pmin(1, phi/r)
-  
+
   return(wts)
 }
 

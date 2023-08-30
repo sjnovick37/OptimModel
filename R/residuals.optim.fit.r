@@ -1,3 +1,9 @@
+# Program:  residuals.optim.fit.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Get raw or studentized residuals from optim.fit() object
+
 residuals.optim.fit = function(object, type=c("raw", "studentized"))
 {
 

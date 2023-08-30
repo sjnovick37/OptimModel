@@ -1,13 +1,11 @@
 # Program:  beta.model.R
-# Location:  s:/novick/R libraries/Hill Model/funs
 # Version:  1
 # Author:   Steven Novick
 # Date:     March 24, 2021
 # Purpose:  Beta (hook-effect) Model, gradiant, and backsolve algorithms
-#       Can be used with "Optim Model" (Novick) library
 
 ##  e0 = theta[1], ydelta = theta[2], log(delta1) = theta[3], log(delta2) = theta[4], log(delta3) = theta[5]
-    
+
 .beta.func = function(delta1, delta2, log=TRUE)
 {
   ## Both delta1, delta2 > 0
@@ -21,11 +19,11 @@ beta.model = function(theta, x)
   maxX = attr(theta, "maxX")
   if ( is.null(maxX) )
     maxX = max(x)
-  
+
   delta1 = exp(theta[3])
   delta2 = exp(theta[4])
   delta3 = maxX+exp(theta[5])
-  
+
   mu = theta[1] + theta[2]*exp(.beta.func(delta1, delta2, log=TRUE) + delta1*log(x) + delta2*log(delta3-x) - (delta1+delta2)*log(delta3) )
   return(mu)
 }
@@ -48,7 +46,7 @@ attr(beta.model, "backsolve") = function(theta, y, log=FALSE)
         (y - beta.model(theta, x))^2
     }
   out = optimize(f.ssq, interval = c(0, x0), theta = theta, y = y)$minimum
-  
+
   if ( log )
     out = log(out)
   return(out)
@@ -59,11 +57,11 @@ attr(beta.model, "gradient") = function(theta, x)
   maxX = attr(theta, "maxX")
   if ( is.null(maxX) )
     maxX = max(x)
-    
+
   delta1 = exp(theta[3])
   delta2 = exp(theta[4])
   delta3 = maxX+exp(theta[5])
-  
+
   jac = matrix(0, length(x), 5)
   jac[,1] = 1
 
@@ -73,7 +71,7 @@ attr(beta.model, "gradient") = function(theta, x)
   jac[index,2] = temp
 
   jac[index,3] = theta[2]*temp*delta1*( log(delta1+delta2) - theta[3] + log(x[index]) - log(delta3) )
-  jac[index,4] = theta[2]*temp*delta2*( log(delta1+delta2) - theta[4] + log(delta3 - x[index]) - log(delta3) ) 
+  jac[index,4] = theta[2]*temp*delta2*( log(delta1+delta2) - theta[4] + log(delta3 - x[index]) - log(delta3) )
   jac[index,5] = theta[2]*temp*exp(theta[5])*( delta2/(delta3-x[index]) - (delta1+delta2)/delta3 )
 
   return(jac)

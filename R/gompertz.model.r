@@ -1,3 +1,11 @@
+# Program:  gompertz.model.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Gompertz Model, gradiant, and backsolve algorithms
+
+##  A = theta[1], B = theta[2], m = theta[3], offset = theta[4]
+
 gompertz.model = function(theta, x)
 {
 
@@ -11,7 +19,7 @@ attr(gompertz.model, "backsolve") = function(theta, y, log=FALSE)
   out = theta[4] + (1/theta[3])*log( -log((y-theta[1])/(theta[2]-theta[1])) )
   if ( log )
     out = log(out)
-    
+
   return(out)
 }
 attr(gompertz.model, "gradient") = function(theta, x)
@@ -24,7 +32,7 @@ attr(gompertz.model, "gradient") = function(theta, x)
   grad[,2] = t2
   grad[,3] = -(theta[2]-theta[1])*t1*t2*(x-theta[4])
   grad[,4] = (theta[2]-theta[1])*t1*t2*theta[3]
-  
+
   return(grad)
 }
 attr(gompertz.model, "start") = function(x, y)
@@ -35,7 +43,7 @@ attr(gompertz.model, "start") = function(x, y)
   yMax = 1.01*max(y)
   yLL = log( -log( (y-yMin)/(yMax-yMin) ) )
   fit = lm( yLL~x )
-  
+
   theta0[1] = yMin
   theta0[2] = yMax
   theta0[3] = as.vector(coef(fit)[2])

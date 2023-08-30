@@ -1,3 +1,13 @@
+# Program:  rout.fitter.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Perform the Robust Outlier (ROUT) Detection method of Motulsky and Brown (2006)
+
+
+# Motulsky HJ, Brown RE. Detecting outliers when fitting data with nonlinear regression - a new method based on robust nonlinear regression and the false discovery rate.
+# BMC Bioinformatics. 2006 Mar 9;7:123. doi: 10.1186/1471-2105-7-123. PMID: 16526949; PMCID: PMC1472692.
+
 rout.fitter = function( theta0=NULL, f.model, x, y, lbs=FALSE, ntry=0, tol=1e-3, Q=0.01, ... )
 {
 
@@ -36,7 +46,7 @@ rout.fitter = function( theta0=NULL, f.model, x, y, lbs=FALSE, ntry=0, tol=1e-3,
     rsdr0 = quantile( abs(res0), 0.6827 )*N/( N-length(theta0) )
     theta0 = c(theta0, lsig=log(rsdr0))
  }
-    
+
  ## Add n.try more starting values in a neighborhood of theta0
  ## Determine the best starting values based on the negative log-likelihood for Cauchy regression
  theta00 = t(theta0)
@@ -87,15 +97,15 @@ rout.fitter = function( theta0=NULL, f.model, x, y, lbs=FALSE, ntry=0, tol=1e-3,
     ii = !fit$outlier
     ssto = sum( (y[ii]-mean(y[ii]))^2 )
     sse = sum( (y[ii]-mu[ii])^2 )
-    fit$r.squared = as.vector( (ssto-sse)/ssto )  
+    fit$r.squared = as.vector( (ssto-sse)/ssto )
 
     ii = !fit$outlier.adj
     ssto = sum( (y[ii]-mean(y[ii]))^2 )
     sse = sum( (y[ii]-mu[ii])^2 )
-    fit$r.squared.adj = as.vector( (ssto-sse)/ssto )  
+    fit$r.squared.adj = as.vector( (ssto-sse)/ssto )
 
   }
 
   return(fit)
 
-}              
+}

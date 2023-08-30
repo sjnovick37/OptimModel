@@ -1,6 +1,27 @@
+# Program:  improved.fitter.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Calls optim.fit() with different starting values across a fixed or random grid
+
 improved.fitter = function( theta0, f.model, x, y, wts,
                             Mult=0.1, n.start=1000, max.try=25, start.method=c("fixed", "random"), until.converge=FALSE, keep.all=FALSE, ... )
 {
+
+  ## theta0 = starting parameter values
+  ## f.model = model function to be fitted, of the form function(theta, x).
+  ## x, y, wts = explanatory variable(s), response variable, and (optionally) weights
+  ## Mult = numeric multiplier, single # or vector of length(theta), to set distance
+  ##        of the grid of starting values from theta0
+  ## n.start, max.try = number of starting values.  Each starting values is evaluated via weighted sums of squared errors.
+  ##                    Only the best max.try starting values are feed into optim.fit()
+  ## start.method = fixed or random grid of starting values.  Fixed is preferred when the # of parameters is small.
+  ##                and random is preferred when the # of parameter is large.
+  ## until.converge = logical.  Try every starting value (FALSE)? Or stop when convergence is reached (TRUE)?
+  ## keep.all = logical. Keep all model fits from every starting value?
+  ## ... = parameters passed to optim()
+
+
   cl = match.call()
   if ( is.null(theta0) )
     theta0 = attr(f.model, "start")(x, y)
@@ -15,14 +36,14 @@ improved.fitter = function( theta0, f.model, x, y, wts,
 
  M = pmax( Mult*abs(theta0), 0.1 )
  start.method = match.arg(start.method)
- 
+
  if ( start.method=="fixed" )
  {
    theta00 = rbind(theta0,
                expand.grid(lapply(1:length(theta0), function(i){ seq( theta0[i]-3*M[i], theta0[i]+3*M[i], length=ceiling(n.start^(1/length(theta0)))) }))
                )
  }else{
-   theta00 = rbind(theta0, 
+   theta00 = rbind(theta0,
               sapply(1:length(theta0), function(i){ rnorm(n.start-1, mean=theta0[i], sd=M[i]) })
               )
  }
@@ -71,4 +92,4 @@ improved.fitter = function( theta0, f.model, x, y, wts,
 
   return(fit)
 
-}              
+}

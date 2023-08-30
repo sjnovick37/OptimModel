@@ -1,14 +1,26 @@
+# Program:  predict.optim.fit.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Get predicted values, standard errors, confidence/prediction intervals from optim.fit()
+
 predict.optim.fit = function (object, x, se.fit = FALSE,
                         interval = c("none", "confidence", "prediction"), K=1, level = 0.95)
 {
 
+  ## object = optim.fit() object
+  ## x = explanatory variable(s) at which to make predictions
+  ## se.fit = logical. Provide standard errors?
+  ## interval, K = Can supply confidence interval or prediction interval for the next K observations
+  ## level = confidence level
+
   interval = match.arg(interval)
-  
+
   if ( missing(x) && (se.fit | interval!="none") )
     stop("User must provide 'x' for se.fit=TRUE or interval='confidence' or 'prediction'.")
   if ( interval != "none" )
     se.fit = TRUE
-    
+
 
   f.model = eval(object$call$f.model)
   if ( missing(x) && interval=="none" )
@@ -43,5 +55,5 @@ predict.optim.fit = function (object, x, se.fit = FALSE,
 }
 
 
-    
+
 

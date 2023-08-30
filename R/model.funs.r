@@ -1,3 +1,13 @@
+# Program:  model.funs.R
+# Version:  1
+# Author:   Steven Novick
+# Date:     July 3, 2003
+# Purpose:  Internal functions for (weighted) least squares + gradient,
+##          the "trick function" for iterative reweighted least squares (IRWLS),
+##          log-likelihood, and maximum likelihood functions.
+# This function is not visible to the user
+
+
 .f.ssq = function(theta, x, y, w=NULL)
 {
   if ( is.null(w) )
@@ -42,6 +52,7 @@
 
 .f.mle = function(all.param)
 {
+    # note p.th = length(theta) in the file optim.fit.mle.r
   l = list(theta=all.param[1:p.th], lsigma=all.param[length(all.param)])
   if ( phi.fixed )
     l[["phi"]] = phi.start
