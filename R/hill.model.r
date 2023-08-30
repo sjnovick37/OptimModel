@@ -1,13 +1,11 @@
 # Program:  hill.model.R
-# Location:  s:/novick/R libraries/Hill Model/funs
 # Version:  1
 # Author:   Steven Novick
 # Date:     July 3, 2003
 # Purpose:  Hill Model, gradiant, and backsolve algorithms
-#       Can be used with "Optim Model" (Novick) library
 
 ##  emin = theta[1], emax = theta[2], log(ec50) = theta[3], m = theta[4]
-    
+
 hill.model = function(theta, x){ theta[1] + (theta[2]-theta[1])/( 1 + exp( theta[4]*log(x) - theta[4]*theta[3]) ) }
 attr(hill.model, "backsolve") = function(theta, y, log=FALSE)
 {
